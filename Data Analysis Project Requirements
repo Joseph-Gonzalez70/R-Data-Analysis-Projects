@@ -1,0 +1,23 @@
+Data Analysis Project (Due 3/19)
+
+Read the following instructions carefully:
+
+Guidelines:
+
+You should find datasets at first and conduct proper data analysis. 
+Your results should be written in report form, including a cover page and an appendix of your R code at the end of the report.  
+
+You should analyze three datasets (which can be selected from e.g, the Wichern datasets) in the project:
+
+Dataset 1: Conduct multiple linear regression;
+Dataset 2: Conduct two-sample test and LDA;
+Dataset 3: Conduct PCA.
+
+For each data analysis, you should write in full sentences, and have the
+following sections for the body of your report.
+
+Introduction: Briefly summarize the goal of the analysis in your own words;
+Summary: Summarize your data by plots or sample estimates; 
+Analysis: Implement the analysis based on what you have done in homework;
+Conclusion: Describe and interpret your findings.
+
