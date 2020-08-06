@@ -1,1 +1,2 @@
 # R-Data-Analysis-Projects
+This repository contains R code and a written report for a data analysis project. The project's requirements and further details are in the "Data Analysis Project Requirements" document. Ultimately, this project's goal is to use multiple linear regression, LDA, two-sample test, and PCA on three different data sets. The first data set contains real estate data on Milwaukee homes, the second data set contains size and shape data for painted turtles, and the third data set contains census-tract data.
