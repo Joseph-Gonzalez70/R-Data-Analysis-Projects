@@ -1,5 +1,5 @@
-###data set 1 bone marrow
-# data
+#Data set 1 bone marrow
+#Read in the data
 data1= read.table("T7-1.DAT", header=FALSE)
 colnames(data1)=c("Total_Dwelling_Size", "Assessed_Value", "Selling_Price")
 attach(data1)
@@ -10,16 +10,16 @@ summary(data1)
 sapply(data1,var)
 par(mfrow=c(1,3))
 xlabels=c("Hundred Square Feet", "Thouand Dollars", "Thousand Dollars")
-#histogram
+#Histogram
 for (i in 1:3){
   hist(data1[,i], main=paste("Histogram of", names(data1[i])),xlab=xlabels[i])
 }
 par(mfrow=c(2,2))
-#boxplot
+#Boxplot
 for (i in 1:3){
   boxplot(data1[,i], main=paste("Boxplot of", names(data1[i])),ylab=xlabels[i])
 }
-#histogram for residuals
+#Histogram for residuals
 fit1=lm(Selling_Price~ Total_Dwelling_Size+Assessed_Value, data = data1)
 fit2=lm(Selling_Price~ Total_Dwelling_Size, data = data1)
 anova(fit1)
@@ -36,7 +36,7 @@ Z
 sapply(Z,class)
 r <- dim(Z)[2]-1
 
-# least square estimates
+#Least square estimates
 beta_hat <- solve(t(Z)%*%Z)%*%t(Z)%*%Selling_Price
 beta_hat
 
@@ -49,6 +49,7 @@ SSTO=sum(Yadjust^2)
 Yadjusted2=fit1$fitted.values-mean(data1$Selling_Price)*rep(1,n)
 SSRtotal=sum(Yadjusted2^2)
 SSRtotal
+
 #RSS
 Rres1=0
 sum(fit1$residuals^2)
@@ -57,15 +58,15 @@ sum(fit1$residuals^2)
 R_square <- 1 - sum((Selling_Price - Z%*%beta_hat)^2)/sum((Selling_Price-mean(Selling_Price))^2)
 R_square
 
-# sigma_hat_square
+#Sigma_hat_square
 sigma_hat_square <- sum((Selling_Price - Z%*%beta_hat)^2)/(n-r-1)
 sigma_hat_square
 
-# estimated covariance of hat{beta}
+#Estimated covariance of hat{beta}
 cov_B = sigma_hat_square * solve(t(Z)%*%Z)
 cov_B
 
-#confidence interval for beta_1
+#Confidence interval for beta_1
 alpha=0.05
 j <- 2
 cat('[',
@@ -75,7 +76,7 @@ cat('[',
     ']')
 
 
-# confidence region based simultaneous confidence intervals 
+#Confidence region based simultaneous confidence intervals 
 
 j <- 0
 cat('[',
@@ -98,7 +99,7 @@ cat('[',
     beta_hat[j+1] + sqrt((r+1)*qf(1-alpha, r+1, n-r-1))*sqrt(sigma_hat_square * solve(t(Z)%*%Z)[j+1,j+1]),
     ']')
 
-# Bonferroni correction based simultaneous confidence intervals
+#Bonferroni correction based simultaneous confidence intervals
 
 j <- 0
 cat('[',
@@ -122,8 +123,8 @@ cat('[',
     beta_hat[j+1] + qt(1-alpha/(2*(r+1)), n-r-1)*sqrt(sigma_hat_square * solve(t(Z)%*%Z)[j+1,j+1]),
     ']')
 
-# F-test
-# H_0: beta_1 = beta_2 = 0
+#F-test
+#H_0: beta_1 = beta_2 = 0
 
 C <- matrix(c(0,0,0,0,1,1),2,3)
 C
@@ -138,8 +139,8 @@ cval_f
 
 anova(fit1,fit2)
 qf(1-0.05,1,17)
-# t-test for single coefficient
-# H_0: beta_j = 0, H_a: beta_j != 0
+#t-test for single coefficient
+#H_0: beta_j = 0, H_a: beta_j != 0
 
 j <- 1
 t_stat <- (beta_hat[j+1] - 0)/sqrt(sigma_hat_square * solve(t(Z)%*%Z)[j+1,j+1])
@@ -149,7 +150,7 @@ alpha <- 0.05
 cval_t <- qt(1-alpha/2, n-r-1)
 cval_t
 
-# confidence interval for z_0^T beta
+#Confidence interval for z_0^T beta
 
 z_0 <- c(1, mean(Z[,2]), mean(Z[,3]))
 
@@ -159,7 +160,7 @@ cat('[',
     z_0%*%beta_hat + sqrt(sigma_hat_square)*sqrt(t(z_0)%*%solve(t(Z)%*%Z)%*%z_0)*qt(1-alpha/2, n-r-1),
     ']')
 
-# prediction interval for Y_0 = z_0^T beta + epsilon_0
+#Prediction interval for Y_0 = z_0^T beta + epsilon_0
 
 cat('[',
     z_0%*%beta_hat - sqrt(sigma_hat_square)*sqrt(1+t(z_0)%*%solve(t(Z)%*%Z)%*%z_0)*qt(1-alpha/2, n-r-1),
@@ -167,7 +168,7 @@ cat('[',
     z_0%*%beta_hat + sqrt(sigma_hat_square)*sqrt(1+t(z_0)%*%solve(t(Z)%*%Z)%*%z_0)*qt(1-alpha/2, n-r-1),
     ']')
 
-# Confidence Region for (beta_1, beta_2)^T
+#Confidence Region for (beta_1, beta_2)^T
 
 center <- beta_hat[2:3]
 es<-eigen(C%*%solve(t(Z)%*%Z)%*%t(C))
@@ -191,20 +192,20 @@ segments(pts2[2,1],pts2[2,2],pts2[4,1],pts2[4,2],lty=3)
 
 ##########################################################################################
 ------------------------------------------------------------------------------------------------------
- #dataset 2
-# data
+#Dataset 2
+#Data
 data2= read.table("T6-9.DAT", header=FALSE)
 colnames(data2)=c("Length", "Width", "Height", "Gender")
 attach(data2)
 
-#boxplot
+#Boxplot
 for (i in 1:3){
   boxplot(data2[,i]~data2$Gender, main=paste("Boxplot of", names(data2[i])),ylab=xlabels[i])
 }
 
-##################Analysis
+#############Analysis
 
-#### two-sample Hotelling's T2 test  -------
+#### two-sample Hotelling's T2 test  ---------------------
 
 males=which(data2$Gender=="male")
 females=which(data2$Gender=="female")
@@ -220,7 +221,7 @@ sapply(Femaledata[,1:3],sd)
 par(mfrow=c(1,3))
 xlabels=c("Length", "Width", "Height")
 
-# now we perform the two-sample Hotelling T^2-test
+#Now, we perform the two-sample Hotelling T^2-test
 n<-c(24,24)
 p<-3
 xmean1<-colMeans(Maledata)
@@ -237,8 +238,8 @@ cval <- (sum(n)-2)*p/(sum(n)-p-1)*qf(1-alpha,p,sum(n)-p-1)
 cval
 sum(n)-p-1
 
-# to check the significant components
-# simultaneous confidence intervals
+#To check the significant components
+#Simultaneous confidence intervals
 wd<-sqrt(cval*diag(Sp)*sum(1/n))
 Cis<-cbind(d-wd,d+wd)
 
@@ -269,14 +270,14 @@ plot(data2$Width,data2$Height,xlab="Width",ylab="Height",
 legend("topright",legend=c("Females","Males"),pch=c(18,20),col=c(2,4),cex=1)
 
 
-## Method 2: use function LDA in MASS package:
+##Method 2: use function LDA in MASS package:
 
 #Width Vs Length----------------------------------------------------------
 library(MASS)
 lda.obj <- lda(Gender~Length+ Width,data=data2,prior=c(1,1)/2)
 plda <- predict(object=lda.obj,newdata=data2)
 
-# Confusion matrix
+#Confusion matrix
 table(data2[,4],plda$class)
 
 #Expected actual error rate
@@ -289,7 +290,7 @@ for (i in 1:n){
 }
 n_M/n
 
-#plot the decision line
+#Plot the decision line
 gmean <- lda.obj$prior %*% lda.obj$means
 const <- as.numeric(gmean %*%lda.obj$scaling)
 slope <- - lda.obj$scaling[1] / lda.obj$scaling[2]
@@ -305,7 +306,7 @@ lda.obj <- lda(Gender~Length+ Height,data=data2,prior=c(1,1)/2)
 plda <- predict(object=lda.obj,newdata=data2)
 
 ?lda
-# Confusion matrix
+#Confusion matrix
 table(data2[,4],plda$class)
 
 #Expected Actual Error Rate
@@ -319,7 +320,7 @@ for (i in 1:n){
 n_M/n
 
 
-#plot the decision line
+#Plot the decision line
 gmean <- lda.obj$prior %*% lda.obj$means
 const <- as.numeric(gmean %*%lda.obj$scaling)
 slope <- - lda.obj$scaling[1] / lda.obj$scaling[2]
@@ -349,7 +350,7 @@ for (i in 1:n){
 }
 n_M/n
 
-#plot the decision line
+#Plot the decision line
 gmean <- lda.obj$prior %*% lda.obj$means
 const <- as.numeric(gmean %*%lda.obj$scaling)
 slope <- - lda.obj$scaling[1] / lda.obj$scaling[2]
@@ -373,24 +374,24 @@ summary(data3)
 sapply(data3,var)
 sapply(data3,sd)
 
-# correlation matrix
+#Correlation matrix
 census.pc <- princomp(data3, cor=TRUE)
 
 summary(census.pc, loadings = TRUE)
 
-# Showing the eigenvalues of the correlation matrix:
+#Showing the eigenvalues of the correlation matrix:
 (census.pc$sdev)^2
 
-# A scree plot:
+#A scree plot:
 plot(1:(length(census.pc$sdev)),  (census.pc$sdev)^2, type='b', 
      main="Scree Plot", xlab="Number of Components", ylab="Eigenvalue Size")
 
-# Plotting the PC scores for the sample data in the space of the first two principal components:
+#Plotting the PC scores for the sample data in the space of the first two principal components:
 par(pty="s")
 plot(census.pc$scores[,1], census.pc$scores[,2], 
      xlab="PC 1", ylab="PC 2", type ='n', lwd=2, main="Principle Component Scores")
 
-qt()
+
 
 
 
